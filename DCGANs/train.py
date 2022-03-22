@@ -5,6 +5,7 @@
 Training of DCGAN network on MNIST dataset with Discriminator
 and Generator imported from models.py
 """
+# python -m tensorboard.main --logdir $PWD/logs
 
 import torch
 import torch.nn as nn
@@ -19,9 +20,9 @@ from model import Discriminator, Generator, initialize_weights
 # Hyperparameters etc.
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 LEARNING_RATE = 3e-4  # could also use two lrs, one for gen and one for disc
-BATCH_SIZE = 128
+BATCH_SIZE = 16
 IMAGE_SIZE = 64
-CHANNELS_IMG = 1
+CHANNELS_IMG = 3
 NOISE_DIM = 100
 NUM_EPOCHS = 5
 FEATURES_DISC = 64
@@ -38,8 +39,9 @@ transforms = transforms.Compose(
 )
 
 # If you train on MNIST, remember to set channels_img to 1
-dataset = datasets.MNIST(root="D:\pythonProject\git_project\Gans\dataset", train=True, transform=transforms,
-                       download=True)
+# dataset = datasets.MNIST(root="D:\pythonProject\git_project\Gans\dataset", train=True, transform=transforms,
+#                        download=True)
+dataset = datasets.ImageFolder(root="D:\database\celeba\img_align_celeba", transform=transforms)
 
 # comment mnist above and uncomment below if train on CelebA
 #dataset = datasets.ImageFolder(root="celeb_dataset", transform=transforms)
